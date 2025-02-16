@@ -2,3 +2,30 @@
 - Is there a difference in the flow of execution from when the code was in the setTimeout function?
 - Is the flow of execution in both these examples different from the flow of execution with the examples using the fetch() API, which also returns a promise? 
 - If yes, explain the code execution difference. Add your explanation to this file.
+
+Answer - 
+
+1 Extract the code in the setTimeout function and replace it with the extracted code. Then run the main script.
+The code execution will no longer be asynchronous. The summing logic will execute immediately within the same event loop cycle, and the promise will resolve before returning from the function.
+
+2 Is there a difference in the flow of execution from when the code was in the setTimeout function?
+Yes, there is a difference.
+With setTimeout: The summing logic is scheduled to run in the next event loop cycle. This creates a delay, so returning from sum is logged before any summing occurs.
+Without setTimeout: The summing logic executes immediately. The numbers are summed before returning from sum is logged.
+
+3 Is the flow of execution in both these examples different from the flow of execution with the examples using the fetch() API, which also returns a promise?
+Yes, the flow of execution is different.
+
+4 If yes, explain the code execution difference.
+
+With fetch():
+
+The fetch() API is inherently asynchronous because it delegates the network request to the browser's web APIs.
+The execution of the network request does not block the JavaScript thread. Instead, the promise resolves/rejects only when the network request completes.
+This introduces actual external delays due to network latency.
+With setTimeout:
+
+The asynchronous behavior is simulated by scheduling the summing logic in the next event loop cycle. The delay is controlled by setTimeout and is not dependent on external factors like network latency.
+Without setTimeout:
+
+The summing logic executes synchronously in the same event loop cycle. The promise resolves immediately after the summing completes.
